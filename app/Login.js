@@ -5,15 +5,26 @@ import {
   TouchableOpacity,
   StyleSheet,
   Image,
-  KeyboardAvoidingView,
 } from "react-native";
 import { FONT, COLORS, SIZES } from "../constants/theme";
 import { useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import CustomInput from "./components/CustomInput";
 import { useKeyboard } from "@react-native-community/hooks";
+import { connect } from "react-redux";
+// import { loginUser } from "./Redux/AuthActions"; // Import the login action
+import { auth } from "../Firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import store from "./Redux/authRedux";
+import { useSelector } from "react-redux";
+import { loginUser } from "./Redux/authRedux";
+import { useDispatch } from "react-redux"; // Import the useDispatch hook
 
 const Login = () => {
+  const dispatch = useDispatch(); // Use the useDispatch hook
+
+  const state = useSelector((state) => state);
+  console.log(state);
   const EMAIL_REGEX =
     /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
   const email_rules = {
@@ -34,12 +45,25 @@ const Login = () => {
       message: "La contraseña debe tener minimo 7 caracteres",
     },
   };
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-  const submitFunction = (props) => {
+  const { control, handleSubmit, watch } = useForm();
+  console.log(watch("Correo"));
+  const submitFunction = (data) => {
+    // const loginUser = async (email, password) => {
+    //   try {
+    //     const userCredential = await signInWithEmailAndPassword(
+    //       auth,
+    //       email,
+    //       password
+    //     );
+    //     // dispatch(loginSuccess(userCredential.user));
+    //     console.log(userCredential);
+    //   } catch (error) {
+    //     // dispatch(loginError(error.message));
+    //     console.log(error.message);
+    //   }
+    // };
+    // loginUser(data.Correo, data.Contraseña);
+    dispatch(loginUser(data.Correo, data.Contraseña));
     console.log("BUTTON PRESSED");
   };
   const { keyboardShown } = useKeyboard();
