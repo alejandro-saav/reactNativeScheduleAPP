@@ -7,6 +7,8 @@ import {
 } from "react-native";
 import CustomInput from "./CustomInput";
 import { useForm } from "react-hook-form";
+import { signUpUser } from "../Redux/authRedux";
+import { useDispatch } from "react-redux"; // Import the useDispatch hook
 
 const SignUpInputs = () => {
   const EMAIL_REGEX =
@@ -54,8 +56,9 @@ const SignUpInputs = () => {
     },
   };
   const { control, handleSubmit } = useForm();
-  const submitFunction = (props) => {
-    console.log("BUTTON PRESSED");
+  const dispatch = useDispatch();
+  const submitFunction = (data) => {
+    dispatch(signUpUser(data.Correo, data.Contraseña));
   };
   return (
     <>

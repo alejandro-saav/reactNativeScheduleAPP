@@ -1,30 +1,15 @@
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  Image,
-} from "react-native";
-import { FONT, COLORS, SIZES } from "../constants/theme";
-import { useState } from "react";
+import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { useForm } from "react-hook-form";
 import CustomInput from "./components/CustomInput";
 import { useKeyboard } from "@react-native-community/hooks";
-import { connect } from "react-redux";
-// import { loginUser } from "./Redux/AuthActions"; // Import the login action
-import { auth } from "../Firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import store from "./Redux/authRedux";
-import { useSelector } from "react-redux";
 import { loginUser } from "./Redux/authRedux";
 import { useDispatch } from "react-redux"; // Import the useDispatch hook
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "../Firebase";
 
-const Login = () => {
-  const dispatch = useDispatch(); // Use the useDispatch hook
-
-  const state = useSelector((state) => state);
-  console.log(state);
+const Login = ({ navigation }) => {
+  const dispatch = useDispatch();
+  //* Input rules
   const EMAIL_REGEX =
     /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
   const email_rules = {
@@ -45,27 +30,25 @@ const Login = () => {
       message: "La contraseña debe tener minimo 7 caracteres",
     },
   };
-  const { control, handleSubmit, watch } = useForm();
-  console.log(watch("Correo"));
-  const submitFunction = (data) => {
-    // const loginUser = async (email, password) => {
-    //   try {
-    //     const userCredential = await signInWithEmailAndPassword(
-    //       auth,
-    //       email,
-    //       password
-    //     );
-    //     // dispatch(loginSuccess(userCredential.user));
-    //     console.log(userCredential);
-    //   } catch (error) {
-    //     // dispatch(loginError(error.message));
-    //     console.log(error.message);
-    //   }
-    // };
-    // loginUser(data.Correo, data.Contraseña);
-    dispatch(loginUser(data.Correo, data.Contraseña));
-    console.log("BUTTON PRESSED");
+  //*-------------------------------------------------------------
+
+  const { control, handleSubmit } = useForm();
+  //* SUBMIT FUNCTION DISPATCH ACTION
+
+  const submitFunction = async (data) => {
+    // dispatch(loginUser(data.Correo, data.Contraseña));
+    try {
+      const docRef = await addDoc(collection(db, "users"), {
+        first: "Ada",
+        last: "Lovelace",
+        born: 1815,
+      });
+      console.log("Document written with ID: ", docRef.id);
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
   };
+
   const { keyboardShown } = useKeyboard();
   return (
     <View style={[styles.container, keyboardShown ? { marginTop: 0 } : null]}>
@@ -96,6 +79,12 @@ const Login = () => {
       >
         <Text>Ingresar</Text>
       </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.signUpBtn}
+        onPress={() => navigation.navigate("SignUp")}
+      >
+        <Text style={styles.signUpTxt}>Crear una cuenta -</Text>
+      </TouchableOpacity>
       <View style={styles.optionsContainer}></View>
     </View>
   );
@@ -109,11 +98,11 @@ const styles = StyleSheet.create({
     marginTop: 80,
   },
   img: {
-    marginBottom: 20,
+    marginBottom: 10,
+    borderRadius: 50,
   },
   loginContainer: {
     width: "80%",
-    // backgroundColor: COLORS.gray2,
     borderRadius: 20,
     padding: 15,
   },
@@ -125,4 +114,15 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
   avoidView: {},
+  signUpBtn: {
+    // backgroundColor: "#e1e",
+    paddingVertical: 2,
+    paddingHorizontal: 4,
+    marginTop: 10,
+  },
+  signUpTxt: {
+    fontSize: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#111",
+  },
 });

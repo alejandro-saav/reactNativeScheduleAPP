@@ -87,7 +87,7 @@ export const signUpUser = (email, password) => async (dispatch) => {
       email,
       password
     );
-    dispatch(requestSuccessful(userCredential.user));
+    dispatch(requestSuccessful(userCredential));
     console.log(userCredential);
   } catch (error) {
     dispatch(requestError(error.message));

@@ -1,7 +1,7 @@
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { View, Text } from "react-native";
 import Header from "./Header";
-import home from "../home";
+import home from "../Home";
 import Test from "../Test";
 import Login from "../Login";
 
@@ -39,6 +39,7 @@ const MyDrawer = () => {
         header: (props) => {
           return <Header toggle={props.navigation.toggleDrawer} />;
         },
+        gestureEnabled: true,
         drawerStyle: { paddingTop: 30 },
       }}
     >
