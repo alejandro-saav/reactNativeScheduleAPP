@@ -5,12 +5,12 @@ import {
   TouchableOpacity,
   Text,
 } from "react-native";
-import CustomInput from "./CustomInput";
+import CustomInput from "../customInput/CustomInput";
 import { useForm } from "react-hook-form";
-import { signUpUser } from "../Redux/authRedux";
+import { signUpUser } from "../../Redux/authRedux";
 import { useDispatch } from "react-redux"; // Import the useDispatch hook
 
-const SignUpInputs = () => {
+const SignUpInputs = ({ profileImage }) => {
   const EMAIL_REGEX =
     /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
   const ALPHABET_REGEX = /^[A-Za-z]+$/;
@@ -58,7 +58,7 @@ const SignUpInputs = () => {
   const { control, handleSubmit } = useForm();
   const dispatch = useDispatch();
   const submitFunction = (data) => {
-    dispatch(signUpUser(data.Correo, data.Contraseña));
+    dispatch(signUpUser({ ...data, profileImage: profileImage }));
   };
   return (
     <>

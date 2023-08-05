@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { FONT, COLORS, SIZES } from "../../constants/theme";
+import { FONT, COLORS, SIZES } from "../../../constants/theme";
 
 const Days = () => {
   const getCurrentDate = () => {

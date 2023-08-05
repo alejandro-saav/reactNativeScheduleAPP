@@ -1,11 +1,9 @@
 import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { useForm } from "react-hook-form";
-import CustomInput from "./components/CustomInput";
+import CustomInput from "../components/customInput/CustomInput";
 import { useKeyboard } from "@react-native-community/hooks";
-import { loginUser } from "./Redux/authRedux";
-import { useDispatch } from "react-redux"; // Import the useDispatch hook
-import { collection, addDoc } from "firebase/firestore";
-import { db } from "../Firebase";
+import { loginUser } from "../Redux/authRedux";
+import { useDispatch } from "react-redux";
 
 const Login = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -36,24 +34,14 @@ const Login = ({ navigation }) => {
   //* SUBMIT FUNCTION DISPATCH ACTION
 
   const submitFunction = async (data) => {
-    // dispatch(loginUser(data.Correo, data.Contraseña));
-    try {
-      const docRef = await addDoc(collection(db, "users"), {
-        first: "Ada",
-        last: "Lovelace",
-        born: 1815,
-      });
-      console.log("Document written with ID: ", docRef.id);
-    } catch (e) {
-      console.error("Error adding document: ", e);
-    }
+    dispatch(loginUser(data.Correo, data.Contraseña));
   };
 
   const { keyboardShown } = useKeyboard();
   return (
     <View style={[styles.container, keyboardShown ? { marginTop: 0 } : null]}>
       <Image
-        source={require("../assets/images/loginIMG.png")}
+        source={require("../../assets/images/loginIMG.png")}
         style={styles.img}
       />
       <View style={styles.loginContainer}>

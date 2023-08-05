@@ -1,36 +1,29 @@
-import { createDrawerNavigator } from "@react-navigation/drawer";
-import { View, Text } from "react-native";
-import Header from "./Header";
-import home from "../Home";
-import Test from "../Test";
-import Login from "../Login";
+import {
+  createDrawerNavigator,
+  DrawerItem,
+  DrawerContentScrollView,
+} from "@react-navigation/drawer";
+import Header from "./header/Header";
+import home from "../Screens/Home";
+import Groups from "../Screens/Groups";
+import { logoutUser } from "../Redux/authRedux";
+import { useDispatch } from "react-redux";
 
 const MyDrawer = () => {
-  function Feed() {
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text>Feed Screen</Text>
-      </View>
-    );
-  }
-
-  function Notifications() {
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text>Notifications Screen</Text>
-      </View>
-    );
-  }
-
-  function Profile() {
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text>Profile Screen</Text>
-      </View>
-    );
-  }
-
+  const dispatch = useDispatch();
   const Drawer = createDrawerNavigator();
+  const logout = () => {
+    dispatch(logoutUser());
+  };
+
+  const CustomDrawerContent = ({ navigation }) => {
+    return (
+      <DrawerContentScrollView>
+        <DrawerItem label="Home" onPress={() => navigation.navigate("Home")} />
+        <DrawerItem label="Log out" onPress={logout} />
+      </DrawerContentScrollView>
+    );
+  };
   return (
     <Drawer.Navigator
       useLegacyImplementation
@@ -42,37 +35,10 @@ const MyDrawer = () => {
         gestureEnabled: true,
         drawerStyle: { paddingTop: 30 },
       }}
+      // drawerContent={CustomDrawerContent}
     >
-      <Drawer.Screen
-        name="Inicio"
-        component={home}
-        options={{ drawerLabel: "Inicio" }}
-      />
-      <Drawer.Screen
-        name="Grupo"
-        component={Notifications}
-        options={{ drawerLabel: "Grupo" }}
-      />
-      <Drawer.Screen
-        name="Horario"
-        component={Profile}
-        options={{ drawerLabel: "Horario" }}
-      />
-      <Drawer.Screen
-        name="Materias"
-        component={Profile}
-        options={{ drawerLabel: "Materias" }}
-      />
-      <Drawer.Screen
-        name="Test"
-        component={Test}
-        options={{ drawerLabel: "Test" }}
-      />
-      <Drawer.Screen
-        name="Login"
-        component={Login}
-        options={{ drawerLabel: "Login" }}
-      />
+      <Drawer.Screen name="Home" component={home} />
+      <Drawer.Screen name="Grupos" component={Groups} />
     </Drawer.Navigator>
   );
 };

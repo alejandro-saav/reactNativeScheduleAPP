@@ -1,13 +1,11 @@
 import { StyleSheet, View } from "react-native";
-import Days from "./components/Days";
-import Tareas from "./components/Tareas";
+import Days from "../components/header/Days";
 
 export default function Home() {
   return (
     <>
       <View style={styles.container}>
         <Days />
-        <Tareas />
       </View>
     </>
   );

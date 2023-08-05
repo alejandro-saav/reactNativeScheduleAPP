@@ -1,13 +1,12 @@
 // ProfileImagePicker.js
-import React, { useState } from "react";
-import { View, TouchableOpacity, Text, Image, StyleSheet } from "react-native";
+import React from "react";
+import { TouchableOpacity, Text, Image, StyleSheet } from "react-native";
 import { AntDesign } from "react-native-vector-icons";
 import * as ImagePicker from "expo-image-picker";
-import profileIMG from "../../assets/images/profileIMG.png";
-import { FONT, COLORS, SIZES } from "../../constants/theme";
+import defaultProfileImage from "../../../assets/images/profileIMG.png";
+import { COLORS } from "../../../constants/theme";
 
-const ProfileImagePicker = () => {
-  const [image, setImage] = useState(null);
+const ProfileImagePicker = ({ profileImage, setIMG }) => {
   const [status, requestPermission] = ImagePicker.useMediaLibraryPermissions();
 
   const pickImage = async () => {
@@ -23,7 +22,7 @@ const ProfileImagePicker = () => {
       });
 
       if (!result.canceled) {
-        setImage(result.assets[0].uri);
+        setIMG(result.assets[0].uri);
       }
     } else {
       createTwoButtonAlert();
@@ -32,8 +31,11 @@ const ProfileImagePicker = () => {
 
   return (
     <TouchableOpacity style={styles.imgProfile} onPress={pickImage}>
-      <Image source={image ? { uri: image } : profileIMG} style={styles.img} />
-      {!image ? (
+      <Image
+        source={profileImage ? { uri: profileImage } : defaultProfileImage}
+        style={styles.img}
+      />
+      {!profileImage ? (
         <Text style={styles.plusSign}>
           <AntDesign
             name="pluscircle"

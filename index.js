@@ -1,6 +1,6 @@
 import "react-native-gesture-handler";
 import { useFonts } from "expo-font";
-import Primero from "./app/Primero";
+import App from "./app/App";
 import { Provider } from "react-redux";
 import store from "./app/Redux/authRedux";
 import { registerRootComponent } from "expo";
@@ -16,7 +16,7 @@ const index = () => {
   }
   return (
     <Provider store={store}>
-      <Primero />
+      <App />
     </Provider>
   );
 };
