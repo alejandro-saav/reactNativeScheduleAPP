@@ -2,12 +2,14 @@ import {
   createDrawerNavigator,
   DrawerItem,
   DrawerContentScrollView,
+  DrawerItemList,
 } from "@react-navigation/drawer";
 import Header from "./header/Header";
 import home from "../Screens/Home";
-import Groups from "../Screens/Groups";
-import { logoutUser } from "../Redux/authRedux";
+// import Groups from "../Screens/groupsScreen/Groups";
+import { logoutUser } from "../Redux/auth/authActions";
 import { useDispatch } from "react-redux";
+import GroupsTabNavigator from "../Screens/groupsScreen/GroupsStackNavigator";
 
 const MyDrawer = () => {
   const dispatch = useDispatch();
@@ -16,10 +18,10 @@ const MyDrawer = () => {
     dispatch(logoutUser());
   };
 
-  const CustomDrawerContent = ({ navigation }) => {
+  const CustomDrawerContent = (props) => {
     return (
-      <DrawerContentScrollView>
-        <DrawerItem label="Home" onPress={() => navigation.navigate("Home")} />
+      <DrawerContentScrollView {...props}>
+        <DrawerItemList {...props} />
         <DrawerItem label="Log out" onPress={logout} />
       </DrawerContentScrollView>
     );
@@ -35,10 +37,10 @@ const MyDrawer = () => {
         gestureEnabled: true,
         drawerStyle: { paddingTop: 30 },
       }}
-      // drawerContent={CustomDrawerContent}
+      drawerContent={CustomDrawerContent}
     >
       <Drawer.Screen name="Home" component={home} />
-      <Drawer.Screen name="Grupos" component={Groups} />
+      <Drawer.Screen name="Grupos" component={GroupsTabNavigator} />
     </Drawer.Navigator>
   );
 };

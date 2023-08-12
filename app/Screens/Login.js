@@ -2,7 +2,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { useForm } from "react-hook-form";
 import CustomInput from "../components/customInput/CustomInput";
 import { useKeyboard } from "@react-native-community/hooks";
-import { loginUser } from "../Redux/authRedux";
+import { loginUser } from "../Redux/auth/authActions";
 import { useDispatch } from "react-redux";
 
 const Login = ({ navigation }) => {

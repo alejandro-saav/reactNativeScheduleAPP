@@ -4,6 +4,7 @@ import App from "./app/App";
 import { Provider } from "react-redux";
 import store from "./app/Redux/authRedux";
 import { registerRootComponent } from "expo";
+import { PaperProvider } from "react-native-paper";
 
 const index = () => {
   const [fontsLoaded] = useFonts({
@@ -16,7 +17,9 @@ const index = () => {
   }
   return (
     <Provider store={store}>
-      <App />
+      <PaperProvider>
+        <App />
+      </PaperProvider>
     </Provider>
   );
 };

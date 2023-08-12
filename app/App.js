@@ -6,14 +6,14 @@ import Drawer from "./components/MyDrawer";
 import SignUp from "./Screens/SignUp";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux"; // Import the useDispatch hook
-import { fetchLocalData } from "./Redux/authRedux";
+import { fetchLocalData } from "./Redux/auth/authActions";
 import { View, ActivityIndicator, StyleSheet } from "react-native";
 
 const App = () => {
   const dispatch = useDispatch();
   const Stack = createNativeStackNavigator();
-  const { status, loading } = useSelector((state) => state); // Use useSelector to access the state
-  console.log(status ? "verdadero" : "falso");
+  const status = useSelector((state) => state.status); // Use useSelector to access the state
+  const loading = useSelector((state) => state.loading); // Use useSelector to access the state
 
   useEffect(() => {
     dispatch(fetchLocalData());

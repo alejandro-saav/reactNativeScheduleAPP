@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import CustomInput from "../customInput/CustomInput";
 import { useForm } from "react-hook-form";
-import { signUpUser } from "../../Redux/authRedux";
+import { signUpUser } from "../../Redux/auth/authActions";
 import { useDispatch } from "react-redux"; // Import the useDispatch hook
 
 const SignUpInputs = ({ profileImage }) => {
