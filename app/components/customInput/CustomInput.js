@@ -9,6 +9,8 @@ const CustomInput = ({
   placeholder,
   secureTextEntry,
   type,
+  customStyles,
+  multiline,
 }) => {
   return (
     <Controller
@@ -31,9 +33,10 @@ const CustomInput = ({
               onChangeText={onChange}
               onBlur={onBlur}
               placeholder={placeholder}
-              style={styles.input}
+              style={customStyles ? { ...customStyles } : styles.input}
               secureTextEntry={secureTextEntry}
               keyboardType={type}
+              multiline={multiline}
             />
           </View>
           {error && (
@@ -61,7 +64,7 @@ const styles = StyleSheet.create({
   input: {
     height: 40,
     borderColor: "#94ADD7",
-    borderBottomWidth: 2,
+    borderWidth: 2,
     borderRadius: 5,
     paddingLeft: 5,
   },

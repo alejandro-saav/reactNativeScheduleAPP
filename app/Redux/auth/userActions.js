@@ -1,25 +1,45 @@
+import { auth } from "../../../Firebase";
+import { db } from "../../../Firebase";
+import { setDoc, doc, getDoc, addDoc, collection } from "firebase/firestore";
 //* auth.currentUser.uid
 
-export const getUserGroups = (userId) => async (dispatch) => {
-  const userGroupsRef = firebase
-    .firestore()
-    .collection(`Users/${userId}/groups`);
+export const REQUEST_LOADING = "REQUEST_LOADING";
+export const REQUEST_ERROR = "REQUEST_ERROR";
+export const REQUEST_SUCCESSFUL = "REQUEST_SUCCESSFUL";
+
+export function requestLoading() {
+  return {
+    type: REQUEST_LOADING,
+    payload: false,
+  };
+}
+
+export function requestError(error) {
+  return {
+    type: REQUEST_ERROR,
+    payload: error,
+  };
+}
+
+export function requestSuccessful() {
+  return {
+    type: REQUEST_SUCCESSFUL,
+    payload: true,
+  };
+}
+console.log(auth);
+export const createNewGroup = (groupData) => async (dispatch) => {
+  console.log(auth.useruid);
+  // const userRef = db.collection("Users").doc(auth.useruid);
   try {
-    const userGroupsSnapshot = await userGroupsRef.get();
-
-    const userGroups = userGroupsSnapshot.docs.map((doc) => {
-      const groupData = doc.data();
-      return {
-        groupId: doc.id,
-        name: groupData.name,
-        // Add more fields if needed
-      };
-    });
-
-    return userGroups;
+    dispatch(requestLoading());
+    await addDoc(
+      collection(db, `Users/${auth.currentUser.uid}/groups`),
+      groupData
+    );
+    dispatch(requestSuccessful());
   } catch (error) {
     dispatch(requestError(error.message));
-    return [];
   }
 };
 

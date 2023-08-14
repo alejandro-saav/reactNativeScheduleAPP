@@ -2,9 +2,8 @@ import "react-native-gesture-handler";
 import { useFonts } from "expo-font";
 import App from "./app/App";
 import { Provider } from "react-redux";
-import store from "./app/Redux/authRedux";
+import store from "./app/Redux/store";
 import { registerRootComponent } from "expo";
-import { PaperProvider } from "react-native-paper";
 
 const index = () => {
   const [fontsLoaded] = useFonts({
@@ -17,9 +16,7 @@ const index = () => {
   }
   return (
     <Provider store={store}>
-      <PaperProvider>
-        <App />
-      </PaperProvider>
+      <App />
     </Provider>
   );
 };

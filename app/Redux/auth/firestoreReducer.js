@@ -1,25 +1,29 @@
-import { AUTH_LOADING, AUTH_ERROR, AUTH_SUCCESSFUL } from "./authActions";
+import {
+  REQUEST_LOADING,
+  REQUEST_ERROR,
+  REQUEST_SUCCESSFUL,
+} from "./userActions";
 
 const initialState = {
   status: null,
-  loading: true,
+  loading: false,
   error: "",
 };
 
-const authReducer = (state = initialState, action) => {
+const firestoreReducer = (state = initialState, action) => {
   switch (action.type) {
-    case AUTH_LOADING:
+    case REQUEST_LOADING:
       return {
         ...state,
         loading: true,
       };
-    case AUTH_ERROR:
+    case REQUEST_ERROR:
       return {
         ...state,
         loading: false,
         error: action.payload,
       };
-    case AUTH_SUCCESSFUL:
+    case REQUEST_SUCCESSFUL:
       return {
         status: action.payload,
         loading: false,
@@ -30,4 +34,4 @@ const authReducer = (state = initialState, action) => {
   }
 };
 
-export default authReducer;
+export default firestoreReducer;

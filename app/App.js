@@ -12,9 +12,10 @@ import { View, ActivityIndicator, StyleSheet } from "react-native";
 const App = () => {
   const dispatch = useDispatch();
   const Stack = createNativeStackNavigator();
-  const status = useSelector((state) => state.status); // Use useSelector to access the state
-  const loading = useSelector((state) => state.loading); // Use useSelector to access the state
-
+  console.log(useSelector((state) => state));
+  const status = useSelector((state) => state.auth.status); // Use useSelector to access the state
+  const loading = useSelector((state) => state.auth.loading); // Use useSelector to access the state
+  console.log(status);
   useEffect(() => {
     dispatch(fetchLocalData());
   }, []);

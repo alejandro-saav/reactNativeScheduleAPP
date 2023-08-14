@@ -8,26 +8,26 @@ import { db } from "../../../Firebase";
 import { setDoc, doc, getDoc } from "firebase/firestore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export const REQUEST_LOADING = "REQUEST_LOADING";
-export const REQUEST_ERROR = "REQUEST_ERROR";
-export const REQUEST_SUCCESSFUL = "REQUEST_SUCCESSFUL";
+export const AUTH_LOADING = "AUTH_LOADING";
+export const AUTH_ERROR = "AUTH_ERROR";
+export const AUTH_SUCCESSFUL = "AUTH_SUCCESSFUL";
 
-function requestLoading() {
+export function requestLoading() {
   return {
-    type: REQUEST_LOADING,
+    type: AUTH_LOADING,
   };
 }
 
-function requestError(error) {
+export function requestError(error) {
   return {
-    type: REQUEST_ERROR,
+    type: AUTH_ERROR,
     payload: error,
   };
 }
 
-function requestSuccessful(user) {
+export function requestSuccessful(user) {
   return {
-    type: REQUEST_SUCCESSFUL,
+    type: AUTH_SUCCESSFUL,
     payload: user,
   };
 }

@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 
 const Header = (props) => {
   const [modalVisible, setModalVisible] = useState(false);
-  const userData = useSelector((state) => state.status);
+  const userData = useSelector((state) => state.auth.status);
   return (
     <SafeAreaView style={styles.container}>
       <TouchableOpacity style={styles.icon} onPress={() => props.toggle()}>
